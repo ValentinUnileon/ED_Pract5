@@ -1,7 +1,7 @@
 package ule.edi.tree;
 
 
-import java.util.Map; 
+import java.util.Map;  
 
 /**
  * Interfaz de operaciones del TAD árbol.
