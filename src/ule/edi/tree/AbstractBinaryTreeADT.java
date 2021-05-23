@@ -4,7 +4,7 @@ package ule.edi.tree;
  * arbol binario.
  * 
  * @author profesor
- *
+ * 
  * @param <T>
  */
 public abstract class AbstractBinaryTreeADT<T> extends AbstractTreeADT<T> {
