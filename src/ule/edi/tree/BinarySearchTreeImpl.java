@@ -89,6 +89,8 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 */
 	public BinarySearchTreeImpl() {
 		// TODO HACER QUE THIS SEA EL NODO VACIO
+		BinarySearchTreeImpl<T> nodo = new BinarySearchTreeImpl<T>(null);					//ESTA BIEN?
+		this.father=nodo;
 	
 	}
 
