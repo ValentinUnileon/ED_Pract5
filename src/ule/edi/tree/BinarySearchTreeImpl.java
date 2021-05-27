@@ -88,15 +88,14 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 * arbol BST vaci­o
 	 */
 	public BinarySearchTreeImpl() {
-		// TODO HACER QUE THIS SEA EL NODO VACIO
-		BinarySearchTreeImpl<T> nodo = new BinarySearchTreeImpl<T>(null);					//ESTA BIEN?
-		this.father=nodo;
+					
+		this.father=null;
 	
 	}
 
 	public BinarySearchTreeImpl(BinarySearchTreeImpl<T> father) {
-		// TODO HACER QUE THIS SEA EL NODO VACIO, asignando como padre el parametro
-		// recibido
+		// TODO HACER QUE THIS SEA EL NODO VACIO, asignando como padre el parametro			//DUDA
+		this.father=father;
 	
 	}
 
@@ -133,8 +132,28 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 * @return numero de elementos insertados en el arbol (elementos diferentes de null)
 	 */
 	public int insert(Collection<T> elements) {
-		// si alguno es 'null', no se inserta
-		// TODO Implementar el metodo
+
+		// crear un auxialiar
+		
+		BinarySearchTreeImpl<T> puntero;
+		puntero=this.father;
+		
+		boolean fin=false;
+		
+		while(!false) {
+			if(puntero.content==null) {
+				
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		return 0;
 	}
