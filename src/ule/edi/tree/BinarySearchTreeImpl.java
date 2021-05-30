@@ -89,13 +89,15 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 */
 	public BinarySearchTreeImpl() {
 					
-		this.father=null;
+		this.father=null;																//DUDA hay que poner le contador a cero?
+		this.count=0;
 	
 	}
 
 	public BinarySearchTreeImpl(BinarySearchTreeImpl<T> father) {
-		// TODO HACER QUE THIS SEA EL NODO VACIO, asignando como padre el parametro			//DUDA
+		// TODO HACER QUE THIS SEA EL NODO VACIO, asignando como padre el parametro			
 		this.father=father;
+		this.count=0;
 	
 	}
 
@@ -118,7 +120,61 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 */
 	public String toString() {
 		// TODO implementar este metodo
-		return null;
+		
+		BinarySearchTreeImpl<T> puntero=this.father;
+		
+		StringBuffer result = new StringBuffer();
+
+		boolean fin=false;
+		
+		
+			
+			if(!puntero.isLeaf()) {
+				
+				//se trata la parte derecha
+				
+				while(!puntero.isLeaf()) {
+				
+					if(puntero.getLeftBST().content!=null) {
+					
+
+					
+					
+					
+					
+					}else {
+					//se añaden conjuntos vacios
+					}
+			
+				}
+				
+				
+				//cuando se termina con el lado derecho se empieza con el izquierdo, comprobanod que no este vacio
+				
+				if(puntero.getRightBST().content!=null) {
+					
+				}else {
+					//se añaden conjuntos vacios
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+			}else {
+				result.append("{" + puntero.content+", "+ "∅"+", "+ "∅" );
+
+			}
+		
+		
+
+
+		
+		
+		return result.toString();
 		
 	}
 	
@@ -135,19 +191,37 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 
 		// crear un auxialiar
 		
-		BinarySearchTreeImpl<T> puntero;
-		puntero=this.father;
+		BinarySearchTreeImpl<T> puntero=this.father;
 		
-		boolean fin=false;
+	
 		
-		while(!false) {
-			if(puntero.content==null) {
+		
+		
+		Iterator<T> elementos = elements.iterator();									//preguntar si esta bien
+		
+		while(elementos.hasNext()) {
+			
+			
+			
+			if(elementos.next() !=null) {			//se debe de añadir el siguiente elemento
+
+				//utilizar insert
+				
+				
+				
+			}else{
+				
+				elementos.next();
 				
 			}
+			
+			
 		}
 		
+
 		
 		
+		//comprueba que el padre es nulo y enctonces calcula el elemento pasado 
 		
 		
 		
@@ -190,9 +264,75 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 * @throws IllegalArgumentException si element es null
 	 */
 	public boolean insert(T element) {
-		// TODO Implementar el metodo
-	 return false;
+		
+		
+		
+		if(element==null) {
+			throw new IllegalArgumentException("Elemento nulo");
+		}
+		
+		BinarySearchTreeImpl<T> puntero=this.father;
+		
+		boolean resultado=false;
+		
+		
+		
+		boolean fin=false;
+											//se puede utilizar le metodo isLeaf
+		while(!false) {						//busco el sitio disponible para añadir el elemento
+			
+			if(puntero.content==null) {		//se añade en el primer nodo
+				
+				//se añade aqui 
+				
+				puntero.content=element;
+				fin=true;
+				resultado=true;
+				
+				
+				BinarySearchTreeImpl<T> derecha= new BinarySearchTreeImpl(puntero);
+				this.setRightBST(derecha);
+				
+				BinarySearchTreeImpl<T> izquierda= new BinarySearchTreeImpl(puntero);
+				this.setLeftBST(izquierda);
+				
+				
+				
+				//falta dejar los nodos hijos a null utilizando el constructor con father
+				
+				
+				
+			}else {						//siguiente nodo
+										//averguar si derecho o izquierdo
+				
+				if(puntero.content.compareTo( element ) == 1 ) {										//DUDA
+					
+					puntero=getLeftBST();			
+					
+				}else if(puntero.content.compareTo( element ) == -1) {
+					
+					puntero=getRightBST();
+						
+					
+				}else if(puntero.content.compareTo( element ) == 0) {
+					
+					//se aumenta el contador
+					puntero.count++;
+					fin=true;
+					resultado=false;
+					
+				}
+				
+			}
+				
+		}
+		
+		//return resultado;			//DUDA
+		
+		
+	 
 	}
+	
 
 	/**
 	 * Busca el elemento en el arbol.

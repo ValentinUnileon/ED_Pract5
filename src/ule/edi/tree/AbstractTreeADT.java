@@ -164,7 +164,7 @@ public abstract class AbstractTreeADT<T> implements TreeADT<T> {
 				}
 				result.delete(result.length() - 2, result.length());
 				result.append("]");
-			}
+			} 
 			
 			//	Y cada sub-árbol
 			for (int i = 0; i < getMaxDegree(); i++) {
