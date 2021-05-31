@@ -1,6 +1,7 @@
 package ule.edi.tree;
 
  
+import java.util.Collection;
 import java.util.Iterator; 
 import java.util.LinkedList;
 import java.util.List;
@@ -57,14 +58,63 @@ public class BinarySearchTreeTests {
 			
 		ejemplo = new BinarySearchTreeImpl<Integer>();
 		ejemplo.insert(10, 20, 5, 2, 15, 30);
-		Assert.assertEquals(ejemplo.toString(), "{10, {5, {2, ∅, ∅}, ∅}, {20, {15, ∅, ∅}, {30, ∅, ∅}}}");
+		Assert.assertEquals("{10, {5, {2, ∅, ∅}, ∅}, {20, {15, ∅, ∅}, {30, ∅, ∅}}}", ejemplo.toString() );
 		
 		
 		other =new BinarySearchTreeImpl<Integer>();
 		other.insert(10, 20, 5, 2, 15, 12);
 		Assert.assertEquals(other.toString(), "{10, {5, {2, ∅, ∅}, ∅}, {20, {15, {12, ∅, ∅}, ∅}, ∅}}");
 		
-	    	}
+	 }
+	
+	@Test
+	public void testInsertColection() {
+		
+		BinarySearchTreeImpl<Integer> nuevo =new BinarySearchTreeImpl<Integer>();
+		
+		Collection<Integer> coleccion = new LinkedList<Integer>();
+		
+		coleccion.add(20);
+		coleccion.add(20);
+		coleccion.add(30);
+	
+		nuevo.insert(coleccion);
+		
+		
+		Assert.assertEquals(nuevo.toString(), "{20(2), ∅, {30, ∅, ∅}}");
+
+	}
+	
+	
+	@Test
+	public void testInsert() {
+		
+		BinarySearchTreeImpl<Integer> nuevo =new BinarySearchTreeImpl<Integer>();
+		nuevo.insert(20); 
+		nuevo.insert(20); 
+		nuevo.insert(30);
+		Assert.assertEquals(nuevo.toString(), "{20(2), ∅, {30, ∅, ∅}}");
+
+	}
+	
+	
+	@Test
+	public void testContains() {
+		
+		BinarySearchTreeImpl<Integer> nuevo =new BinarySearchTreeImpl<Integer>();
+		nuevo.insert(20); 
+		nuevo.insert(20); 
+		nuevo.insert(30);
+		nuevo.insert(10);
+		Assert.assertEquals(nuevo.contains(30), true);
+		Assert.assertEquals(nuevo.contains(20), true);
+		Assert.assertEquals(nuevo.contains(10), true);
+		Assert.assertEquals(nuevo.contains(15), false);
+
+	}
+	
+	
+	
 	
 	@Test
 	public void testRemoveCountMayor1() {
@@ -77,6 +127,7 @@ public class BinarySearchTreeTests {
 	
 	@Test
 	public void testRemoveCountMayor1HastaVaciar() {
+		
 		ejemplo.insert(20);
 		ejemplo.insert(20);
 		Assert.assertEquals("{10, {5, {2, ∅, ∅}, ∅}, {20(3), {15, ∅, ∅}, {30, ∅, ∅}}}",ejemplo.toString());

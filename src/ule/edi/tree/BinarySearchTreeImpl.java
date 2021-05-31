@@ -1,6 +1,7 @@
 package ule.edi.tree;
   
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -119,62 +120,42 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 * @return cadena con el contenido del árbol incluyendo su atributo count entre paréntesis si elemento tiene más de 1 instancia
 	 */
 	public String toString() {
-		// TODO implementar este metodo
 		
-		BinarySearchTreeImpl<T> puntero=this.father;
-		
-		StringBuffer result = new StringBuffer();
-
-		boolean fin=false;
-		
-		
+		if (! isEmpty()) {
+			//	Construye el resultado de forma eficiente
+			StringBuffer result = new StringBuffer();
+				
+			//	Raíz
+			result.append("{" + content.toString());
 			
-			if(!puntero.isLeaf()) {
-				
-				//se trata la parte derecha
-				
-				while(!puntero.isLeaf()) {
-				
-					if(puntero.getLeftBST().content!=null) {
-					
-
-					
-					
-					
-					
-					}else {
-					//se añaden conjuntos vacios
-					}
-			
-				}
-				
-				
-				//cuando se termina con el lado derecho se empieza con el izquierdo, comprobanod que no este vacio
-				
-				if(puntero.getRightBST().content!=null) {
-					
-				}else {
-					//se añaden conjuntos vacios
-				}
-				
-				
-				
-				
-				
-				
-				
-				
-			}else {
-				result.append("{" + puntero.content+", "+ "∅"+", "+ "∅" );
-
+			if(count>1) {
+				result.append("("+ count + ")");
 			}
-		
-		
-
-
-		
-		
-		return result.toString();
+			
+			if (! tags.isEmpty()) {
+				result.append(" [");
+				
+				List<String> sk = new LinkedList<String>(tags.keySet());
+				
+				Collections.sort(sk);
+				for (String k : sk) {
+					result.append("(" + k + ", " + tags.get(k) + "), ");
+				}
+				result.delete(result.length() - 2, result.length());
+				result.append("]");
+			} 
+			
+			//	Y cada sub-árbol
+			for (int i = 0; i < getMaxDegree(); i++) {
+				result.append(", " + getSubtree(i).toString());
+			}
+			//	Cierra la "}" de este árbol
+			result.append("}");
+			
+			return result.toString();
+		} else {
+			return AbstractTreeADT.EMPTY_TREE_MARK;
+		}
 		
 	}
 	
@@ -188,48 +169,20 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 * @return numero de elementos insertados en el arbol (elementos diferentes de null)
 	 */
 	public int insert(Collection<T> elements) {
-
-		// crear un auxialiar
 		
-		BinarySearchTreeImpl<T> puntero=this.father;
+		int numero=0;
 		
-	
+		for(T elem:elements) {							//test
 		
-		
-		
-		Iterator<T> elementos = elements.iterator();									//preguntar si esta bien
-		
-		while(elementos.hasNext()) {
-			
-			
-			
-			if(elementos.next() !=null) {			//se debe de añadir el siguiente elemento
-
-				//utilizar insert
-				
-				
-				
-			}else{
-				
-				elementos.next();
+			if(elem!=null) {
+				insert(elem);
+				numero++;
 				
 			}
-			
-			
 		}
 		
-
-		
-		
-		//comprueba que el padre es nulo y enctonces calcula el elemento pasado 
-		
-		
-		
-		
-		
-		
-		
-		return 0;
+	
+		return numero;
 	}
 
 	/**
@@ -243,9 +196,19 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 */
 	public int insert(T... elements) {
 		
-		// si alguno es 'null', no inserta ese elemento
-		// TODO Implementar el metodo
-		return 0;
+		int numero=0;
+		
+		for(T elem:elements) {
+		
+			if(elem!=null) {
+				insert(elem);
+				numero++;
+				
+			}
+		}
+		
+	
+		return numero;
 	}
 
 	/**
@@ -271,7 +234,7 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 			throw new IllegalArgumentException("Elemento nulo");
 		}
 		
-		BinarySearchTreeImpl<T> puntero=this.father;
+		BinarySearchTreeImpl<T> puntero=this; 
 		
 		boolean resultado=false;
 		
@@ -279,26 +242,27 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 		
 		boolean fin=false;
 											//se puede utilizar le metodo isLeaf
-		while(!false) {						//busco el sitio disponible para añadir el elemento
+		while(!fin) {						//busco el sitio disponible para añadir el elemento
 			
 			if(puntero.content==null) {		//se añade en el primer nodo
-				
+				 
 				//se añade aqui 
 				
 				puntero.content=element;
+				puntero.count= puntero.count+1;
 				fin=true;
 				resultado=true;
 				
 				
 				BinarySearchTreeImpl<T> derecha= new BinarySearchTreeImpl(puntero);
-				this.setRightBST(derecha);
+				puntero.setRightBST(derecha);
 				
 				BinarySearchTreeImpl<T> izquierda= new BinarySearchTreeImpl(puntero);
-				this.setLeftBST(izquierda);
+				puntero.setLeftBST(izquierda);
 				
 				
 				
-				//falta dejar los nodos hijos a null utilizando el constructor con father
+				
 				
 				
 				
@@ -307,11 +271,11 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 				
 				if(puntero.content.compareTo( element ) == 1 ) {										//DUDA
 					
-					puntero=getLeftBST();			
+					puntero=puntero.getLeftBST();			
 					
 				}else if(puntero.content.compareTo( element ) == -1) {
 					
-					puntero=getRightBST();
+					puntero=puntero.getRightBST();
 						
 					
 				}else if(puntero.content.compareTo( element ) == 0) {
@@ -321,15 +285,15 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 					fin=true;
 					resultado=false;
 					
+					
 				}
 				
 			}
 				
 		}
 		
-		//return resultado;			//DUDA
-		
-		
+		return resultado;			
+	
 	 
 	}
 	
@@ -345,8 +309,44 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 *
 	 */
 	public boolean contains(T element) {
-		// TODO Implementar el metodo
-		return false;
+		
+		if(element==null) {
+			throw new IllegalArgumentException("Elemento nulo");
+		}
+		
+		BinarySearchTreeImpl<T> puntero=this; 
+		
+		boolean encontrado=false;
+		boolean resultado=false;
+		
+		while(!encontrado) {
+			
+			if(puntero.content==null) {
+				encontrado=true;
+				
+			}else {
+				
+				if(puntero.content.compareTo( element ) == 1 ) {										//DUDA
+					
+					puntero=puntero.getLeftBST();			
+					
+				}else if(puntero.content.compareTo( element ) == -1) {
+					
+					puntero=puntero.getRightBST();
+						
+					
+				}else if(puntero.content.compareTo( element ) == 0) {
+
+					encontrado=true;
+					resultado=true;	
+					
+				}
+			
+			}
+			
+		}
+
+		return resultado;
 	}
 
 	/**
@@ -371,8 +371,104 @@ public class BinarySearchTreeImpl<T extends Comparable<? super T>> extends Abstr
 	 * @throws IllegalArgumentException si element es null
      *
 	 */
-	public void remove(T element) {
-		// TODO Implementar el metodo
+	public void remove(T element) {	//recursivo
+		
+		if(element==null) {
+			throw new IllegalArgumentException("Elemento nulo");
+		}
+		
+		boolean encontrado=false;
+		
+		boolean resultado=false;
+		
+		
+		BinarySearchTreeImpl<T> puntero=this; 
+	
+		
+		while(!encontrado) {
+			
+			if(puntero.content==null) {
+				encontrado=true;
+				resultado=true;
+				
+			}else {
+				
+				if(puntero.content.compareTo( element ) == 1 ) {										//DUDA
+					
+					puntero=puntero.getLeftBST();			
+					
+				}else if(puntero.content.compareTo( element ) == -1) {
+					
+					puntero=puntero.getRightBST();
+						
+					
+				}else if(puntero.content.compareTo( element ) == 0) {
+
+					encontrado=true;
+					resultado=false;
+					
+					if(puntero.count>1) {
+						
+						
+						// en este caso solamente se decrementa el contador
+						puntero.count--;
+						
+						
+						
+						
+					}else {
+						
+						//en este caso se elimina el nodo y se debe comprobar los hijos que tiene
+
+						
+						if(puntero.getLeftBST()!=null && puntero.getRightBST()!=null) {
+							
+							//se escoge el menor de los mayores
+							
+							
+							
+						}else if(puntero.getLeftBST()==null && puntero.getRightBST()!=null) {
+						
+							//solo hijo derecho
+							
+						}else if(puntero.getLeftBST()!=null && puntero.getRightBST()==null) {
+							//solo hijo izquierdo
+							
+							puntero.content=puntero.getLeftBST().content;
+							puntero.count=puntero.getLeftBST().count;
+							puntero.setRightBST(  puntero.getLeftBST().getRightBST()  );
+							puntero.setLeftBST(puntero.getLeftBST().getLeftBST());
+							
+							
+							
+							
+						
+						}
+						
+					
+					}
+			
+					
+				}
+			
+			}
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		if(resultado) {
+			throw new NoSuchElementException("Elemento no encontrado");
+		}
+		
+		
+		
 	}
 	
 	/**
